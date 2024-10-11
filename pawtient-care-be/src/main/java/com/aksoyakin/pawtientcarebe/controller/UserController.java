@@ -8,12 +8,14 @@ import com.aksoyakin.pawtientcarebe.dto.response.ApiResponse;
 import com.aksoyakin.pawtientcarebe.exception.ResourceNotFoundException;
 import com.aksoyakin.pawtientcarebe.exception.UserAlreadyExistsException;
 import com.aksoyakin.pawtientcarebe.model.User;
-import com.aksoyakin.pawtientcarebe.service.user.impl.UserServiceImpl;
+import com.aksoyakin.pawtientcarebe.service.user.UserService;
 import com.aksoyakin.pawtientcarebe.utils.FeedBackMessage;
 import com.aksoyakin.pawtientcarebe.utils.UrlMapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -22,13 +24,13 @@ import static org.springframework.http.HttpStatus.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
     private final EntityConverter<User, UserDto> entityConverter;
 
     @PostMapping(UrlMapping.REGISTER_USER)
     public ResponseEntity<ApiResponse> register(@RequestBody RegistrationRequest registrationRequest) {
         try {
-            User user = userServiceImpl.register(registrationRequest);
+            User user = userService.register(registrationRequest);
             UserDto registeredUser = entityConverter.mapEntityToDto(user, UserDto.class);
             return ResponseEntity
                     .ok(new ApiResponse(FeedBackMessage.SUCCESS, registeredUser));
@@ -46,7 +48,7 @@ public class UserController {
     @PutMapping(UrlMapping.UPDATE_USER)
     public ResponseEntity<ApiResponse> update(@PathVariable Long userId, @RequestBody UserUpdateRequest userUpdateRequest) {
         try {
-            User user = userServiceImpl.update(userId, userUpdateRequest);
+            User user = userService.update(userId, userUpdateRequest);
             UserDto updatedUser = entityConverter.mapEntityToDto(user, UserDto.class);
             return ResponseEntity
                     .ok(new ApiResponse(FeedBackMessage.UPDATE_SUCCESS, updatedUser));
@@ -59,5 +61,49 @@ public class UserController {
                     .status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), null));
         }
+    }
+
+    @GetMapping(UrlMapping.GET_USER_BY_ID)
+    public ResponseEntity<ApiResponse> findById(@PathVariable Long userId) {
+        try {
+            User user = userService.findById(userId);
+            UserDto userDto = entityConverter.mapEntityToDto(user, UserDto.class);
+            return ResponseEntity
+                    .status(FOUND)
+                    .body(new ApiResponse(FeedBackMessage.FOUND, userDto));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity
+                    .status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @DeleteMapping(UrlMapping.DELETE_USER_BY_ID)
+    public ResponseEntity<ApiResponse> deleteById(@PathVariable Long userId) {
+        try {
+            userService.delete(userId);
+            return ResponseEntity
+                    .ok(new ApiResponse(FeedBackMessage.DELETE_SUCCESS, null));
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity
+                    .status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(), null));
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @GetMapping(UrlMapping.GET_ALL_USERS)
+    public ResponseEntity<ApiResponse> getAllUsers() {
+        List<UserDto> usersDto = userService.getAllUsers();
+        return ResponseEntity
+                .status(FOUND)
+                .body(new ApiResponse(FeedBackMessage.FOUND, usersDto));
     }
 }
