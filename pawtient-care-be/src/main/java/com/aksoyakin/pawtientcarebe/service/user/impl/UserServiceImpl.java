@@ -9,6 +9,7 @@ import com.aksoyakin.pawtientcarebe.factory.UserFactory;
 import com.aksoyakin.pawtientcarebe.model.User;
 import com.aksoyakin.pawtientcarebe.repository.UserRepository;
 import com.aksoyakin.pawtientcarebe.service.user.UserService;
+import com.aksoyakin.pawtientcarebe.utils.FeedBackMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +43,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException(FeedBackMessage.NOT_FOUND));
     }
 
     @Override
     public void delete(Long userId) {
         userRepository.findById(userId)
                 .ifPresentOrElse(userRepository::delete, () -> {
-                    throw new ResourceNotFoundException("User not found!");
+                    throw new ResourceNotFoundException(FeedBackMessage.NOT_FOUND);
                 });
     }
 
