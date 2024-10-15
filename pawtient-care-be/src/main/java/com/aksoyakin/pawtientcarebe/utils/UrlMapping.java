@@ -22,4 +22,11 @@ public class UrlMapping {
     public static final String DELETE_APPOINTMENT_BY_ID = "appointment/{id}/delete";
     public static final String GET_APPOINTMENT_BY_NO = "/appointment/{appointmentNo}/appointment";
     public static final String UPDATE_APPOINTMENT_BY_ID = "appointment/{id}/update";
+
+    //PETS
+    public static final String PETS = API + VERSION + "/pets";
+    public static final String SAVE_PET = "/save-pet";
+    public static final String GET_PET_BY_ID = "/pet/{petId}/get";
+    public static final String DELETE_PET_BY_ID = "/pet/{petId}/delete";
+    public static final String UPDATE_PET_BY_ID = "/pet/{petId}/update";
 }

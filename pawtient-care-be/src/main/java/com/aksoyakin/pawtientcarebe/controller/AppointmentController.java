@@ -28,7 +28,7 @@ public class AppointmentController {
             List<Appointment> appointments = appointmentService.getAllAppointments();
             return ResponseEntity
                     .status(FOUND)
-                    .body(new ApiResponse(FeedBackMessage.FOUND, appointments));
+                    .body(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, appointments));
         } catch (Exception e) {
             return ResponseEntity
                     .status(INTERNAL_SERVER_ERROR)
@@ -43,7 +43,7 @@ public class AppointmentController {
         try {
             Appointment theAppointment = appointmentService.createAppointment(appointment, senderId, recipientId);
             return ResponseEntity
-                    .ok(new ApiResponse(FeedBackMessage.SUCCESS, theAppointment));
+                    .ok(new ApiResponse(FeedBackMessage.CREATE_SUCCESS, theAppointment));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity
                     .status(NOT_FOUND)
@@ -61,7 +61,7 @@ public class AppointmentController {
             Appointment appointment = appointmentService.getAppointmentById(id);
             return ResponseEntity
                     .status(FOUND)
-                    .body(new ApiResponse(FeedBackMessage.FOUND, appointment));
+                    .body(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, appointment));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity
                     .status(NOT_FOUND)
@@ -75,7 +75,7 @@ public class AppointmentController {
             Appointment appointment = appointmentService.getAppointmentByNo(appointmentNo);
             return ResponseEntity
                     .status(FOUND)
-                    .body(new ApiResponse(FeedBackMessage.FOUND, appointment));
+                    .body(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, appointment));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity
                     .status(NOT_FOUND)
