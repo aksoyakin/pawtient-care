@@ -1,13 +1,14 @@
 package com.aksoyakin.pawtientcarebe.service.appointment;
 
 import com.aksoyakin.pawtientcarebe.dto.request.AppointmentUpdateRequest;
+import com.aksoyakin.pawtientcarebe.dto.request.BookAppointmentRequest;
 import com.aksoyakin.pawtientcarebe.model.Appointment;
 
 import java.util.List;
 
 public interface AppointmentService {
 
-    Appointment createAppointment(Appointment appointment, Long senderId, Long recipientId);
+    Appointment createAppointment(BookAppointmentRequest request, Long senderId, Long recipientId);
 
     List<Appointment> getAllAppointments();
 

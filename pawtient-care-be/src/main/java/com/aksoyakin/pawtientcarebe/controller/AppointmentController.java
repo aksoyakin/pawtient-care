@@ -1,6 +1,7 @@
 package com.aksoyakin.pawtientcarebe.controller;
 
 import com.aksoyakin.pawtientcarebe.dto.request.AppointmentUpdateRequest;
+import com.aksoyakin.pawtientcarebe.dto.request.BookAppointmentRequest;
 import com.aksoyakin.pawtientcarebe.dto.response.ApiResponse;
 import com.aksoyakin.pawtientcarebe.exception.ResourceNotFoundException;
 import com.aksoyakin.pawtientcarebe.model.Appointment;
@@ -37,11 +38,11 @@ public class AppointmentController {
     }
 
     @PostMapping(UrlMapping.BOOK_APPOINTMENT)
-    public ResponseEntity<ApiResponse> bookAppointment(@RequestBody Appointment appointment,
+    public ResponseEntity<ApiResponse> bookAppointment(@RequestBody BookAppointmentRequest request,
                                                        @RequestParam Long senderId,
                                                        @RequestParam Long recipientId) {
         try {
-            Appointment theAppointment = appointmentService.createAppointment(appointment, senderId, recipientId);
+            Appointment theAppointment = appointmentService.createAppointment(request, senderId, recipientId);
             return ResponseEntity
                     .ok(new ApiResponse(FeedBackMessage.CREATE_SUCCESS, theAppointment));
         } catch (ResourceNotFoundException e) {

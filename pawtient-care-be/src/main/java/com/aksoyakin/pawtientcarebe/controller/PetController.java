@@ -40,7 +40,7 @@ public class PetController {
         try {
             Pet pet = petService.getPetById(petId);
             return ResponseEntity
-                    .ok(new ApiResponse(FeedBackMessage.CREATE_SUCCESS, pet));
+                    .ok(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, pet));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity
                     .status(NOT_FOUND)
