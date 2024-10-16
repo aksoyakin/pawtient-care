@@ -29,4 +29,12 @@ public class UrlMapping {
     public static final String GET_PET_BY_ID = "/pet/{petId}/get";
     public static final String DELETE_PET_BY_ID = "/pet/{petId}/delete";
     public static final String UPDATE_PET_BY_ID = "/pet/{petId}/update";
+
+    //PHOTOS
+    public static final String PHOTOS = API + VERSION + "/photos";
+    public static final String UPLOAD_PHOTO = "/photo/upload";
+    public static final String UPDATE_PHOTO = "/photo/{photoId}/update";
+    public static final String DELETE_PHOTO = "/photo/{photoId}/user/{userId}/delete";
+    public static final String GET_PHOTO_BY_ID = "/photo/{photoId}/get";
+
 }

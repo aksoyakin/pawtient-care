@@ -74,14 +74,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void deleteAppointment(Long id) {
         appointmentRepository.findById(id)
                 .ifPresentOrElse(appointmentRepository::delete, () -> {
-                    throw new ResourceNotFoundException(FeedBackMessage.NOT_FOUND);
+                    throw new ResourceNotFoundException(FeedBackMessage.RESOURCE_NOT_FOUND);
                 });
     }
 
     @Override
     public Appointment getAppointmentById(Long id) {
         return appointmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(FeedBackMessage.NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException(FeedBackMessage.RESOURCE_NOT_FOUND));
     }
 
     @Override
