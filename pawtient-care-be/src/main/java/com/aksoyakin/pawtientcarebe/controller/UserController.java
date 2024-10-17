@@ -5,8 +5,8 @@ import com.aksoyakin.pawtientcarebe.dto.converter.EntityConverter;
 import com.aksoyakin.pawtientcarebe.dto.request.RegistrationRequest;
 import com.aksoyakin.pawtientcarebe.dto.request.UserUpdateRequest;
 import com.aksoyakin.pawtientcarebe.dto.response.ApiResponse;
+import com.aksoyakin.pawtientcarebe.exception.AlreadyExists;
 import com.aksoyakin.pawtientcarebe.exception.ResourceNotFoundException;
-import com.aksoyakin.pawtientcarebe.exception.UserAlreadyExistsException;
 import com.aksoyakin.pawtientcarebe.model.User;
 import com.aksoyakin.pawtientcarebe.service.user.UserService;
 import com.aksoyakin.pawtientcarebe.utils.FeedBackMessage;
@@ -34,7 +34,7 @@ public class UserController {
             UserDto registeredUser = entityConverter.mapEntityToDto(user, UserDto.class);
             return ResponseEntity
                     .ok(new ApiResponse(FeedBackMessage.CREATE_SUCCESS, registeredUser));
-        } catch (UserAlreadyExistsException e) {
+        } catch (AlreadyExists e) {
             return ResponseEntity
                     .status(CONFLICT)
                     .body(new ApiResponse(e.getMessage(), null));

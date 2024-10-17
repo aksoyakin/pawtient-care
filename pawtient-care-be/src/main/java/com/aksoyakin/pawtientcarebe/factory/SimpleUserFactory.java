@@ -1,7 +1,7 @@
 package com.aksoyakin.pawtientcarebe.factory;
 
 import com.aksoyakin.pawtientcarebe.dto.request.RegistrationRequest;
-import com.aksoyakin.pawtientcarebe.exception.UserAlreadyExistsException;
+import com.aksoyakin.pawtientcarebe.exception.AlreadyExists;
 import com.aksoyakin.pawtientcarebe.model.User;
 import com.aksoyakin.pawtientcarebe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class SimpleUserFactory implements UserFactory {
     @Override
     public User createUser(RegistrationRequest registrationRequest) {
         if (userRepository.existsByEmail(registrationRequest.getEmail())) {
-            throw new UserAlreadyExistsException("Oops! " + registrationRequest.getEmail() + " already exists!");
+            throw new AlreadyExists("Oops! " + registrationRequest.getEmail() + " already exists!");
         }
 
         switch (registrationRequest.getUserType()) {
