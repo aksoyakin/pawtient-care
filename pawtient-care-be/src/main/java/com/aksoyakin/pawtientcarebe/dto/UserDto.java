@@ -2,6 +2,9 @@ package com.aksoyakin.pawtientcarebe.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Data
 public class UserDto {
 
@@ -22,4 +25,16 @@ public class UserDto {
     private boolean isEnabled;
 
     private String specialization;
+
+    private LocalDate createdAt;
+
+    private List<AppointmentDto> appointments;
+
+    private List<ReviewDto> reviews;
+
+    private long photoId;
+
+    private byte[] photo;
+
+    private double averageRating;
 }

@@ -1,5 +1,6 @@
 package com.aksoyakin.pawtientcarebe.service.appointment;
 
+import com.aksoyakin.pawtientcarebe.dto.AppointmentDto;
 import com.aksoyakin.pawtientcarebe.dto.request.AppointmentUpdateRequest;
 import com.aksoyakin.pawtientcarebe.dto.request.BookAppointmentRequest;
 import com.aksoyakin.pawtientcarebe.model.Appointment;
@@ -19,4 +20,6 @@ public interface AppointmentService {
     Appointment getAppointmentById(Long id);
 
     Appointment getAppointmentByNo(String appointmentNo);
+
+    List<AppointmentDto> getUserAppointments(Long userId);
 }

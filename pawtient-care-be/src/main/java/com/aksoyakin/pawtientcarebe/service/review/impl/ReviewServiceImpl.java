@@ -1,11 +1,9 @@
 package com.aksoyakin.pawtientcarebe.service.review.impl;
 
 import com.aksoyakin.pawtientcarebe.dto.request.ReviewUpdateRequest;
-import com.aksoyakin.pawtientcarebe.exception.AlreadyExists;
 import com.aksoyakin.pawtientcarebe.exception.ResourceNotFoundException;
 import com.aksoyakin.pawtientcarebe.model.Review;
 import com.aksoyakin.pawtientcarebe.model.User;
-import com.aksoyakin.pawtientcarebe.model.enums.AppointmentStatus;
 import com.aksoyakin.pawtientcarebe.repository.AppointmentRepository;
 import com.aksoyakin.pawtientcarebe.repository.ReviewRepository;
 import com.aksoyakin.pawtientcarebe.repository.UserRepository;
@@ -18,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +31,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (veterinarianId.equals(reviewerId)) {
             throw new IllegalArgumentException(FeedBackMessage.NOT_ALLOWED);
         }
-
+/*
         Optional<Review> existingReview = reviewRepository
                 .findByVeterinarianIdAndPatientId(veterinarianId, reviewerId);
         if (existingReview.isPresent()) {
@@ -46,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
         if (!hadCompletedAppointments) {
             throw new IllegalStateException(FeedBackMessage.APPLICATION_NOT_COMPLETED);
         }
-
+*/
         User vet = userRepository.findById(veterinarianId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(FeedBackMessage.VET_OR_PATIENT_NOT_FOUND));

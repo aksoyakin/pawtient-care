@@ -5,6 +5,7 @@ import com.aksoyakin.pawtientcarebe.dto.request.RegistrationRequest;
 import com.aksoyakin.pawtientcarebe.dto.request.UserUpdateRequest;
 import com.aksoyakin.pawtientcarebe.model.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface UserService {
@@ -18,4 +19,6 @@ public interface UserService {
     void delete(Long userId);
 
     List<UserDto> getAllUsers();
+
+    UserDto getUserWithDetails(Long userId) throws SQLException;
 }

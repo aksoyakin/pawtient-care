@@ -1,5 +1,8 @@
 package com.aksoyakin.pawtientcarebe.service.appointment.impl;
 
+import com.aksoyakin.pawtientcarebe.dto.AppointmentDto;
+import com.aksoyakin.pawtientcarebe.dto.PetDto;
+import com.aksoyakin.pawtientcarebe.dto.converter.EntityConverter;
 import com.aksoyakin.pawtientcarebe.dto.request.AppointmentUpdateRequest;
 import com.aksoyakin.pawtientcarebe.dto.request.BookAppointmentRequest;
 import com.aksoyakin.pawtientcarebe.exception.ResourceNotFoundException;
@@ -30,6 +33,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     private final UserRepository userRepository;
     private final AppointmentRepository appointmentRepository;
     private final PetService petService;
+    private final EntityConverter<Appointment, AppointmentDto> entityConverter;
+    private final EntityConverter<Pet, PetDto> petEntityConverter;
 
     @Transactional
     @Override
@@ -87,5 +92,21 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment getAppointmentByNo(String appointmentNo) {
         return appointmentRepository.findByAppointmentNo(appointmentNo);
+    }
+
+    @Override
+    public List<AppointmentDto> getUserAppointments(Long userId) {
+        List<Appointment> appointments = appointmentRepository.findAllByUserId(userId);
+        return appointments.stream()
+                .map(appointment -> {
+                    AppointmentDto appointmentDto = entityConverter
+                            .mapEntityToDto(appointment, AppointmentDto.class);
+                    List<PetDto> petsDto = appointment.getPets()
+                            .stream()
+                            .map(pet -> petEntityConverter.mapEntityToDto(pet, PetDto.class))
+                            .toList();
+                    appointmentDto.setPets(petsDto);
+                    return appointmentDto;
+                }).toList();
     }
 }
