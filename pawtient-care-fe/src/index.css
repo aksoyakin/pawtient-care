@@ -1,0 +1,161 @@
+h3 {
+  color: var(--color-primary);
+  font-size: 16px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+h6 {
+  color: var(--color-title);
+  font-size: 14px;
+}
+
+.title {
+  color: rgb(13, 116, 116);
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 16px;
+}
+
+.user-image {
+  border-radius: 100%;
+  max-width: 100px;
+  height: 100px;
+}
+
+/*Start Project background image slider*/
+.background-slider {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+.carousel-item img {
+  object-fit: cover;
+  width: 100%;
+  height: 100vh;
+}
+/*End Project background image slider*/
+
+.footer {
+  background-color: var(--color-modal);
+  color: var(--color-white);
+  padding: 10px;
+  text-align: center;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  height: 2.5rem;
+  margin-top: auto;
+}
+
+/*For modals*/
+.modal-footer {
+  background-color: var(--color-modal);
+  color: var(--color-white);
+  padding: 10px;
+}
+
+.modal-header {
+  background-color: var(--color-modal);
+  color: var(--color-white);
+  padding: 10px;
+
+}
+
+/* Start Navbar*/
+.nav-bg {
+  background-color: var(--color-modal);
+}
+
+.nav-link {
+  color: var(--color-white);
+}
+
+.nav-home {
+  color: var(--color-nav-home);
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 24px;
+  font-style: italic;
+}
+.link {
+  text-decoration: none;
+  margin-bottom: 4px;
+  color: var(--color-nav-home);
+  font-size: 14px;
+}
+
+.link-2 {
+  text-decoration: none;
+  color: #3aa0e0;
+  font-size: 16px;
+}
+/*End Navbar*/
+
+
+.page-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-title)
+}
+
+.field-set {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.legend {
+  font-size: 18px;
+  color: var(--color-title)
+}
+
+/* For password icon input */
+.password-input {
+  padding-right: 40px;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+/* End password icon input */
+
+.user-dashboard {
+  background-color: var(--user-dashboard-background);
+  padding: 10px;
+  height: auto !important;
+}
+
+.small-carousel-container {
+  max-width: 100%;
+  margin: auto;
+}
+
+.small-carousel .carousel-inner {
+  height: 400px;
+}
+
+.small-carousel img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.about {
+  font-size: 18px;
+  color: darkslategrey;
+}
+
+.unauthorized {
+  background-image: url("./assets/images/unauthorized.png");
+  height: 90vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 10px;
+}
