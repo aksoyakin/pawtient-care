@@ -1,20 +1,23 @@
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/home/Home.jsx";
+import {createBrowserRouter, createRoutesFromElements, Route, Router, RouterProvider} from "react-router-dom";
+import RootLayout from "./components/layout/RootLayout.jsx";
 
 function App() {
 
-  return (
-    <main className=''>
+    const router = createBrowserRouter(createRoutesFromElements(
+        <Route path='/' element={<RootLayout/>}>
+            <Route index element={<Home/>}/>
+        </Route>
+    ))
 
-    <div className='text-info'>
-      Welcome to the Pawtient-Care!
-    </div>
-      <Home></Home>
+    return (
+        <main className="">
+            <RouterProvider router={router}/>
 
-    </main>
-
-  )
+        </main>
+    );
 }
 
-export default App
+export default App;
