@@ -89,7 +89,7 @@ public class PhotoServiceImpl implements PhotoService {
         if (photo != null) {
             Blob photoBlob = photo.getImage();
             int blobLength = (int) photoBlob.length();
-            return new byte[blobLength];
+            return photoBlob.getBytes(1, blobLength);
         }
         return null;
     }

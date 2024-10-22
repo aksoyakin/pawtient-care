@@ -37,4 +37,6 @@ public class UserDto {
     private byte[] photo;
 
     private double averageRating;
+
+    private Long totalReviewers;
 }

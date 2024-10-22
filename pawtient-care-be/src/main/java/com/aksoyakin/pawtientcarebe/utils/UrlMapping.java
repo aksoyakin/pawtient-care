@@ -44,4 +44,8 @@ public class UrlMapping {
     public static final String UPDATE_REVIEW = "/review/{reviewId}/update";
     public static final String DELETE_REVIEW = "review/{reviewId}/delete";
     public static final String GET_AVERAGE_RATING = "/veterinarian/{veterinarianId}/average-rating";
+
+    //VETERINARIANS
+    public static final String VETERINARIANS = API + VERSION + "/veterinarians";
+    public static final String GET_ALL_VETERINARIANS = "/get-all-veterinarians";
 }
