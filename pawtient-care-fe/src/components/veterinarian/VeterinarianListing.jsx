@@ -3,18 +3,27 @@ import {Col, Container, Row} from "react-bootstrap";
 import VeterinarianCard from "./VeterinarianCard.jsx";
 import {getVeterinarians} from "./VeterinarianService.jsx";
 import VeterinarianSearch from "./VeterinarianSearch.jsx";
+import UseMessageAlerts from "../hooks/UseMessageAlerts.js";
 
 const VeterinarianListing = () => {
 
     const [veterinarians, setVeterinarians] = useState([]);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [allVeterinarians, setAllVeterinarians] = useState([]);
+    const {
+        errorMessage,
+        setErrorMessage,
+        showErrorAlert,
+        setShowErrorAlert
+    } = UseMessageAlerts();
 
     useEffect(() => {
         getVeterinarians()
             .then((data) => {
                 setVeterinarians(data.data);
+                setAllVeterinarians(data.data);
             }).catch((error) => {
-            setErrorMessage(error);
+            setErrorMessage(error.response.data.message);
+            setShowErrorAlert(true);
         });
     }, []);
 
@@ -22,11 +31,16 @@ const VeterinarianListing = () => {
         return <p> No veterinarians found at this time! </p>;
     }
 
-    const handleSearchResult = (searcresult) => {
-
-    }
-
-
+    const handleSearchResult = (veterinarians) => {
+        if (veterinarians === null) {
+            setVeterinarians(allVeterinarians);
+        } else if (Array.isArray(veterinarians) && veterinarians.length > 0) {
+            setVeterinarians(veterinarians);
+        } else {
+            setVeterinarians([]);
+        }
+    };
+    
     return (
         <Container>
 
@@ -35,11 +49,11 @@ const VeterinarianListing = () => {
             </Row>
 
             <Row className={"justify-content-center"}>
-                <Col md={4}>
-                    <VeterinarianSearch onSearchResult={handleSearchResult()}></VeterinarianSearch>
+                <Col md={"4"}>
+                    <VeterinarianSearch onSearchResult={handleSearchResult}></VeterinarianSearch>
                 </Col>
 
-                <Col md={7}>
+                <Col md={"7"}>
                     {veterinarians.map((vet, index) => (
                         <VeterinarianCard key={index} vet={vet}/>
                     ))}

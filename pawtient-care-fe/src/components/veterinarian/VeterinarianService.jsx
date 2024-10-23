@@ -11,3 +11,17 @@ export async function getVeterinarians() {
         throw error;
     }
 }
+
+export async function findAvailableVeterinarians(searchParams) {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const queryParams = new URLSearchParams(searchParams);
+
+        const result = await api.get(
+            `/veterinarians/search-veterinarian?${queryParams}`
+        );
+        return result.data;
+    } catch (error) {
+        throw error;
+    }
+}
