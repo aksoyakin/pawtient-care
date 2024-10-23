@@ -2,6 +2,7 @@ package com.aksoyakin.pawtientcarebe.service.veterinarian;
 
 import com.aksoyakin.pawtientcarebe.dto.UserDto;
 import com.aksoyakin.pawtientcarebe.dto.converter.EntityConverter;
+import com.aksoyakin.pawtientcarebe.exception.ResourceNotFoundException;
 import com.aksoyakin.pawtientcarebe.model.Appointment;
 import com.aksoyakin.pawtientcarebe.model.Veterinarian;
 import com.aksoyakin.pawtientcarebe.repository.AppointmentRepository;
@@ -43,6 +44,9 @@ public class VeterinarianServiceImpl implements VeterinarianService {
 
     @Override
     public List<Veterinarian> getVeterinariansBySpecialization(String specialization) {
+        if(!veterinarianRepository.existsBySpecialization(specialization)){
+            throw new ResourceNotFoundException("No veterinarians found with " + specialization + " in the system.");
+        }
         return veterinarianRepository.findBySpecialization(specialization);
     }
 

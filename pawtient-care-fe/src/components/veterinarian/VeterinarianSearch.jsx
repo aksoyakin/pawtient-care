@@ -5,8 +5,9 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AlertMessage from "../common/AlertMessage.jsx";
+import {findAvailableVeterinarians} from "./VeterinarianService.jsx";
 
-const VeterinarianSearch = (onSearchResult) => {
+const VeterinarianSearch = ({onSearchResult}) => {
 
     const [searchQuery, setSearchQuery] = useState({
             date: null,
@@ -76,7 +77,8 @@ const VeterinarianSearch = (onSearchResult) => {
             onSearchResult(response.data)
             setShowErrorAlert(false)
         } catch (error) {
-            setErrorMessage(error.message);
+            console.log("loggin the error from the controller", error);
+            setErrorMessage(error.response.data.message);
             setShowErrorAlert(true);
         }
     }
@@ -86,9 +88,9 @@ const VeterinarianSearch = (onSearchResult) => {
             date: null,
             time: null,
             specialization: ""
-        })
+        });
         setShowDateTime(false)
-        onSearchResult([])
+        onSearchResult(null)
     }
 
     return (
@@ -102,8 +104,8 @@ const VeterinarianSearch = (onSearchResult) => {
                                   value={searchQuery.specialization}
                                   onChange={handleInputChange}>
                         <option value="">Select Specialization</option>
-                        <option value={"Surgeon"}>Surgeon</option>
-                        <option value={"Urologist"}>Urologist</option>
+                        <option value={"Surgery"}>Surgery</option>
+                        <option value={"Oncology"}>Oncology</option>
                         <option value={"Other"}>Other</option>
                     </Form.Control>
                 </Form.Group>
@@ -111,7 +113,7 @@ const VeterinarianSearch = (onSearchResult) => {
                 <fieldset>
                     <Row className="mb-3">
                         <Col>
-                            <Form.Group className={"mb-3"}>
+                            <Form.Group className={"mb-3 mt-3"}>
                                 <Form.Check
                                     type={"checkbox"}
                                     label={"Include Date and Time Availability"}
@@ -130,7 +132,7 @@ const VeterinarianSearch = (onSearchResult) => {
                                             dateFormat={"yyyy-MM-dd"}
                                             minDate={new Date()}
                                             className={"form-control"}
-                                            placeholderTexT={"Select date"}
+                                            placeholderText={"Select date"}
                                         />
                                     </Form.Group>
                                     <Form.Group className={"mb-3"}>
