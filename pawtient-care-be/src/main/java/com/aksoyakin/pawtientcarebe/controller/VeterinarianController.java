@@ -7,12 +7,13 @@ import com.aksoyakin.pawtientcarebe.utils.FeedBackMessage;
 import com.aksoyakin.pawtientcarebe.utils.UrlMapping;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @CrossOrigin("http://localhost:5173")
 @RestController
@@ -27,5 +28,19 @@ public class VeterinarianController {
         List<UserDto> allVeterinarians = veterinarianService.getAllVeterinariansWithDetails();
         return ResponseEntity
                 .ok(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, allVeterinarians));
+    }
+
+    @GetMapping(UrlMapping.SEARCH_VETERINARIAN_FOR_APPOINTMENT)
+    public ResponseEntity<ApiResponse> searchVeterinariansForAppointment(@RequestParam(required = false) LocalDate date,
+                                                                         @RequestParam(required = false) LocalTime time,
+                                                                         @RequestParam String specialization){
+        List<UserDto> availableVeterinarians = veterinarianService.findAvailableVetsForAppointment(specialization, date, time);
+        if(availableVeterinarians.isEmpty()){
+            return ResponseEntity
+                    .status(NOT_FOUND)
+                    .body(new ApiResponse(FeedBackMessage.NO_VETS_AVAILABLE, null));
+        }
+        return ResponseEntity
+                .ok(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, availableVeterinarians));
     }
 }

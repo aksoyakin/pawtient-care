@@ -14,4 +14,5 @@ public class FeedBackMessage {
     public static final String APPLICATION_NOT_COMPLETED = "Sorry, only patient with has a completed appointments with this veterinarian can submit a review.";
     public static final String NOT_ALLOWED = "Veterinarians can not review themselves.";
     public static final String VET_OR_PATIENT_NOT_FOUND = "Veterinarian or patient not found!";
+    public static final String NO_VETS_AVAILABLE = "No veterinarians available for the request date and time!";
 }
