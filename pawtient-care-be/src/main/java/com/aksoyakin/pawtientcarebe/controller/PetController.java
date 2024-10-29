@@ -15,6 +15,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping(UrlMapping.PETS)
 @RequiredArgsConstructor
@@ -84,5 +85,23 @@ public class PetController {
                     .status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse(e.getMessage(), null));
         }
+    }
+
+    @GetMapping(UrlMapping.GET_PET_TYPES)
+    public ResponseEntity<ApiResponse> getAllPetTypes(){
+        return ResponseEntity
+                .ok(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, petService.getPetTypes()));
+    }
+
+    @GetMapping(UrlMapping.GET_PET_COLORS)
+    public ResponseEntity<ApiResponse> getAllPetColors(){
+        return ResponseEntity
+                .ok(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, petService.getPetColors()));
+    }
+
+    @GetMapping(UrlMapping.GET_PET_BREEDS)
+    public ResponseEntity<ApiResponse> getAllPetBreeds(@RequestParam String petType){
+        return ResponseEntity
+                .ok(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, petService.getPetBreeds(petType)));
     }
 }
