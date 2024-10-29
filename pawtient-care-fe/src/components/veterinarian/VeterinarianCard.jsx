@@ -42,7 +42,7 @@ const VeterinarianCard = ({vet}) => {
                                 Reviews: Some stars
                             </CardText>
 
-                            <Link to={""} className={"link"}>
+                            <Link to={`/book-appointment/${vet.id}/new-appointment`} className={"link"}>
                                 Book An Appointment
                             </Link>
                         </div>

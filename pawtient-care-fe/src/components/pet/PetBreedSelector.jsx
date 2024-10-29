@@ -1,11 +1,30 @@
-import React, {useState} from 'react';
-import {FormControl, FormGroup} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
+import {Col, FormControl, FormGroup} from "react-bootstrap";
 import AddItemModal from "../modals/AddItemModal.jsx";
+import {getPetBreeds, getPetTypes} from "./PetService.js";
 
-const PetBreedSelector = ({value, onChange}) => {
+const PetBreedSelector = ({petType, value, onChange}) => {
 
     const [petBreeds, setPetBreeds] = useState([]);
     const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        if (petType) {
+            const fetchPetBreeds = async () => {
+                try {
+                    const response = await getPetBreeds(petType);
+                    console.log("The Breeds: ", response.data)
+                    setPetBreeds(response.data);
+                } catch (error) {
+                    console.error(error.response.data.message);
+                }
+            };
+            fetchPetBreeds();
+        } else {
+            setPetBreeds([]);
+        }
+    }, [petType]);
+
 
     const handleBreedChange = (e) => {
         if (e.target.value === "add-new-item") {
@@ -24,23 +43,25 @@ const PetBreedSelector = ({value, onChange}) => {
 
     return (
         <React.Fragment>
-            <FormGroup>
+            <FormGroup as={Col} controlId={"petBreed"}>
                 <FormControl
                     as="select"
-                    name="petType"
+                    name="petBreed"
                     value={value}
                     required
                     onChange={handleBreedChange}>
                     <option value=''>Select Breed</option>
                     <option value='add-new-item'>Add A New Item</option>
-                    <option value='dog'>Dog</option>
-                    <option value='cat'>Cat</option>
+                    {petBreeds.map((breed) => (
+                        <option key={breed} value={breed}> {breed} </option>
+                    ))}
+
                 </FormControl>
                 <AddItemModal
                     show={showModal}
                     handleClose={() => setShowModal(false)}
                     handleSave={handleSaveNewItem}
-                    item={'Breed'}
+                    itemLabel={'Breed'}
                 />
             </FormGroup>
         </React.Fragment>

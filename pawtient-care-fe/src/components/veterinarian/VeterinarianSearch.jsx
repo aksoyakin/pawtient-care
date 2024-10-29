@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AlertMessage from "../common/AlertMessage.jsx";
 import {findAvailableVeterinarians} from "./VeterinarianService.jsx";
+import {dateTimeFormatter} from "../utils/utilities.js";
 
 const VeterinarianSearch = ({onSearchResult}) => {
 
@@ -33,18 +34,18 @@ const VeterinarianSearch = ({onSearchResult}) => {
     };
 
     const handleDateChange = (date) => {
-        setSearchQuery({
-            ...searchQuery,
-            date
-        })
-    };
+        setSearchQuery((prevState) => ({
+            ...prevState,
+            date: date
+        }))
+    }
 
     const handleTimeChange = (time) => {
-        setSearchQuery({
-            ...searchQuery,
-            time
-        })
-    };
+        setSearchQuery((prevState) => ({
+            ...prevState,
+            time: time
+        }))
+    }
 
     const handleDateTimeToggle = (e) => {
         const isChecked = e.target.checked;
@@ -60,15 +61,17 @@ const VeterinarianSearch = ({onSearchResult}) => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
+
+        const {date, time} = searchQuery;
+        const {formattedDate, formattedTime} = dateTimeFormatter(date, time);
+
         let searchParams = {specialization: searchQuery.specialization};
 
         if (searchQuery.date) {
-            const formattedDate = format(searchQuery.date, "yyyy-MM-dd");
             searchParams.date = formattedDate;
         }
 
         if (searchQuery.time) {
-            const formattedTime = format(searchQuery.time, "HH:mm");
             searchParams.time = formattedTime;
         }
 
