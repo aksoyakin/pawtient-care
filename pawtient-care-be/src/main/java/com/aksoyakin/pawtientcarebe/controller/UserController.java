@@ -19,6 +19,7 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
+@CrossOrigin("http://localhost:5173")
 @RestController
 @RequestMapping(UrlMapping.USERS)
 @RequiredArgsConstructor
@@ -68,8 +69,7 @@ public class UserController {
         try {
             UserDto userDto = userService.getUserWithDetails(userId);
             return ResponseEntity
-                    .status(FOUND)
-                    .body(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, userDto));
+                    .ok(new ApiResponse(FeedBackMessage.RESOURCE_FOUND, userDto));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity
                     .status(NOT_FOUND)

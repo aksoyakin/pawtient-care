@@ -10,6 +10,7 @@ import com.aksoyakin.pawtientcarebe.exception.ResourceNotFoundException;
 import com.aksoyakin.pawtientcarebe.factory.UserFactory;
 import com.aksoyakin.pawtientcarebe.model.Review;
 import com.aksoyakin.pawtientcarebe.model.User;
+import com.aksoyakin.pawtientcarebe.repository.ReviewRepository;
 import com.aksoyakin.pawtientcarebe.repository.UserRepository;
 import com.aksoyakin.pawtientcarebe.service.appointment.AppointmentService;
 import com.aksoyakin.pawtientcarebe.service.photo.PhotoService;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final AppointmentService appointmentService;
     private final PhotoService photoService;
     private final ReviewService reviewService;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public User register(RegistrationRequest registrationRequest) {
@@ -78,6 +80,7 @@ public class UserServiceImpl implements UserService {
     public UserDto getUserWithDetails(Long userId) throws SQLException {
         User user = findById(userId);
         UserDto userDto = entityConverter.mapEntityToDto(user, UserDto.class);
+        userDto.setTotalReviewers(reviewRepository.countByVeterinarianId(userId));
         setUserAppointments(userDto);
         setUserPhoto(userDto, user);
         setUserReviews(userDto, userId);
@@ -106,6 +109,7 @@ public class UserServiceImpl implements UserService {
 
         if (!reviewsDto.isEmpty()) {
             double averageRating = reviewService.getAverageRatingForVeterinarian(userId);
+            userDto.setAverageRating(averageRating);
         }
         userDto.setReviews(reviewsDto);
     }
