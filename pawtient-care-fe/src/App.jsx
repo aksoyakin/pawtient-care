@@ -5,6 +5,7 @@ import {createBrowserRouter, createRoutesFromElements, Route, Router, RouterProv
 import RootLayout from "./components/layout/RootLayout.jsx";
 import VeterinarianListing from "./components/veterinarian/VeterinarianListing.jsx";
 import BookAppointment from "./components/appointment/BookAppointment.jsx";
+import Veterinarian from "./components/veterinarian/Veterinarian.jsx";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
             <Route index element={<Home/>}/>
             <Route path={'/doctors'} element={<VeterinarianListing/>}/>
             <Route path={'/book-appointment/:recipientId/new-appointment'} element={<BookAppointment/>}/>
+            <Route path={'/veterinarian/:vetId/veterinarian'} element={<Veterinarian/>}/>
         </Route>
     ))
 

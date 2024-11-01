@@ -12,6 +12,7 @@ import {
 import {Link} from "react-router-dom";
 import placeholder from "../../assets/images/placeholder.jpg"
 import UserImage from "../common/UserImage.jsx";
+import RatingStars from "../rating/RatingStars.jsx";
 
 const VeterinarianCard = ({vet}) => {
     return (
@@ -24,7 +25,6 @@ const VeterinarianCard = ({vet}) => {
                                 <UserImage
                                     userId={vet.id}
                                     userPhoto={vet.photo}
-                                    placeholder={placeholder}
                                 />
                             </Link>
                         </div>
@@ -39,7 +39,7 @@ const VeterinarianCard = ({vet}) => {
                             </CardTitle>
 
                             <CardText className={"review rating-stars"}>
-                                Reviews: Some stars
+                                Reviews: <RatingStars rating={vet.averageRating}/> ({vet.totalReviewers})
                             </CardText>
 
                             <Link to={`/book-appointment/${vet.id}/new-appointment`} className={"link"}>
@@ -50,7 +50,8 @@ const VeterinarianCard = ({vet}) => {
 
                     <AccordionBody>
                         <div>
-                            <Link to={""} className={"link-2"}>See what people are saying about </Link>
+                            <Link to={`/veterinarian/${vet.id}/veterinarian`} className={"link-2"}>See what people are
+                                saying about </Link>
                             <span className="margin-left-space"> Dr. {vet.firstName} </span>
                         </div>
                     </AccordionBody>
